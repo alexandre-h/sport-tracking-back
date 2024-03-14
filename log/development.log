@@ -1,0 +1,1736 @@
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 15:34:23 +0100
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"test111", "exercice"=>["pompe", "dips", "traction", "crunch"], "seance"=>{"name"=>"test111", "exercice"=>["pompe", "dips", "traction", "crunch"]}}
+Completed 401 Unauthorized in 1ms (Views: 0.2ms | ActiveRecord: 1.7ms | Allocations: 573)
+
+
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 15:34:39 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"test111", "exercice"=>["pompe", "dips", "traction", "crunch"], "seance"=>{"name"=>"test111", "exercice"=>["pompe", "dips", "traction", "crunch"]}}
+Completed 401 Unauthorized in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 243)
+
+
+Started POST "/auth/login" for 127.0.0.1 at 2024-02-26 15:34:44 +0100
+Processing by AuthenticationController#login as */*
+  Parameters: {"email"=>"john.doe@demo.fr", "password"=>"[FILTERED]"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "john.doe@demo.fr"], ["LIMIT", 1]]
+  ↳ app/controllers/authentication_controller.rb:5:in `login'
+Completed 200 OK in 254ms (Views: 0.2ms | ActiveRecord: 5.2ms | Allocations: 24575)
+
+
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 15:34:52 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"test111", "exercice"=>["pompe", "dips", "traction", "crunch"], "seance"=>{"name"=>"test111", "exercice"=>["pompe", "dips", "traction", "crunch"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fb656856880>, params: {"name"=>"test111", "exercice"=>["pompe", "dips", "traction", "crunch"], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"test111", "exercice"=>["pompe", "dips", "traction", "crunch"]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (1.3ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "test111"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 422 Unprocessable Entity in 46ms (ActiveRecord: 2.9ms | Allocations: 17481)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Name has already been taken):
+  
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 15:35:07 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi", "exercice"=>["pompe", "dips", "traction", "crunch"], "seance"=>{"name"=>"Seance lundi", "exercice"=>["pompe", "dips", "traction", "crunch"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fb6504ccaa8>, params: {"name"=>"Seance lundi", "exercice"=>["pompe", "dips", "traction", "crunch"], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi", "exercice"=>["pompe", "dips", "traction", "crunch"]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (1.1ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "exercice", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi"], ["exercice", "{pompe,dips,traction,crunch}"], ["created_at", "2024-02-26 14:35:07.079778"], ["updated_at", "2024-02-26 14:35:07.079778"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (2.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 200 OK in 11ms (Views: 0.3ms | ActiveRecord: 4.5ms | Allocations: 3988)
+
+
+Started GET "/seances" for 127.0.0.1 at 2024-02-26 15:35:20 +0100
+Processing by SeancesController#show as */*
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+  [1m[36mSeance Load (0.2ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."user_id" = $1[0m  [["user_id", 1]]
+  ↳ app/controllers/seances_controller.rb:9:in `show'
+Completed 200 OK in 6ms (Views: 3.2ms | ActiveRecord: 0.5ms | Allocations: 2395)
+
+
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to Exercices (20240226145402)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (203.2ms)[0m  [1m[35mCREATE TABLE "exercices" ("id" bigserial primary key, "seance_id" bigint, "name" character varying, "repetition" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_b6c07f5e0d"
+FOREIGN KEY ("seance_id")
+  REFERENCES "seances" ("id")
+)[0m
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE INDEX "index_exercices_on_seance_id" ON "exercices" ("seance_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240226145402"]]
+  [1m[36mTRANSACTION (6.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (6.7ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/favicon.ico" for 127.0.0.1 at 2024-02-26 16:10:15 +0100
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 16:27:33 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"], "seance"=>{"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"]}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fb6528636d8>, params: {"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"]}} }[0m
+Completed 500 Internal Server Error in 13ms (ActiveRecord: 4.7ms | Allocations: 7429)
+
+
+  
+ActiveRecord::AssociationTypeMismatch (Exercice(#34300) expected, got "pompe" which is an instance of String(#2460)):
+  
+app/controllers/seances_controller.rb:13:in `create'
+Started GET "/controllers/seances_controller.rb:13:in" for 127.0.0.1 at 2024-02-26 16:27:48 +0100
+  
+ActionController::RoutingError (No route matches [GET] "/controllers/seances_controller.rb:13:in"):
+  
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 16:28:44 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"], "seance"=>{"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"]}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fb650c80dd0>, params: {"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"]}} }[0m
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.4ms | Allocations: 1009)
+
+
+  
+ActiveRecord::AssociationTypeMismatch (Exercice(#34300) expected, got "pompe" which is an instance of String(#2460)):
+  
+app/controllers/seances_controller.rb:13:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 16:29:31 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"], "seance"=>{"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fb650658b38>, params: {"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"]}} }[0m
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 7.2ms | Allocations: 7626)
+
+
+  
+ActiveRecord::AssociationTypeMismatch (Exercice(#42120) expected, got "pompe" which is an instance of String(#2460)):
+  
+app/controllers/seances_controller.rb:13:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 16:30:05 +0100
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"], "seance"=>{"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"]}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaac9d3a18>, params: {"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"]}} }[0m
+Completed 500 Internal Server Error in 40ms (ActiveRecord: 6.1ms | Allocations: 32157)
+
+
+  
+ActiveRecord::AssociationTypeMismatch (Exercice(#18380) expected, got "pompe" which is an instance of String(#2460)):
+  
+app/controllers/seances_controller.rb:13:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 16:30:31 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"], "seance"=>{"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaacb00af8>, params: {"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"]}} }[0m
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 4.7ms | Allocations: 7565)
+
+
+  
+ActiveRecord::AssociationTypeMismatch (Exercice(#26140) expected, got "pompe" which is an instance of String(#2460)):
+  
+app/controllers/seances_controller.rb:13:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 16:31:00 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"], "seance"=>{"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa3d04128>, params: {"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"]}} }[0m
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 4.4ms | Allocations: 7604)
+
+
+  
+ActiveRecord::AssociationTypeMismatch (Exercice(#33660) expected, got "pompe" which is an instance of String(#2460)):
+  
+app/controllers/seances_controller.rb:13:in `create'
+Started POST "/auth/login" for 127.0.0.1 at 2024-02-26 16:31:04 +0100
+Processing by AuthenticationController#login as */*
+  Parameters: {"email"=>"john.doe@demo.fr", "password"=>"[FILTERED]"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "john.doe@demo.fr"], ["LIMIT", 1]]
+  ↳ app/controllers/authentication_controller.rb:5:in `login'
+Completed 200 OK in 216ms (Views: 0.2ms | ActiveRecord: 0.3ms | Allocations: 1608)
+
+
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 16:31:19 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"], "seance"=>{"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"]}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaaca00f90>, params: {"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi1", "exercice"=>["pompe", "dips", "traction", "crunch"]}} }[0m
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.3ms | Allocations: 968)
+
+
+  
+ActiveRecord::AssociationTypeMismatch (Exercice(#33660) expected, got "pompe" which is an instance of String(#2460)):
+  
+app/controllers/seances_controller.rb:13:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 16:31:35 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi1", "exercice"=>["dips", "traction", "crunch"], "seance"=>{"name"=>"Seance lundi1", "exercice"=>["dips", "traction", "crunch"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaacc2a7d0>, params: {"name"=>"Seance lundi1", "exercice"=>["dips", "traction", "crunch"], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi1", "exercice"=>["dips", "traction", "crunch"]}} }[0m
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.2ms | Allocations: 885)
+
+
+  
+ActiveRecord::AssociationTypeMismatch (Exercice(#33660) expected, got "dips" which is an instance of String(#2460)):
+  
+app/controllers/seances_controller.rb:13:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 16:33:23 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi1", "exercice"=>[{"name"=>"dips"}], "seance"=>{"name"=>"Seance lundi1", "exercice"=>[{"name"=>"dips"}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa6d731d8>, params: {"name"=>"Seance lundi1", "exercice"=>[{"name"=>"dips"}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi1", "exercice"=>[{"name"=>"dips"}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi1"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 422 Unprocessable Entity in 31ms (ActiveRecord: 2.3ms | Allocations: 8247)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Exercice can't be blank):
+  
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 16:33:41 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi1", "exercice"=>["test"], "seance"=>{"name"=>"Seance lundi1", "exercice"=>["test"]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa3f852f8>, params: {"name"=>"Seance lundi1", "exercice"=>["test"], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi1", "exercice"=>["test"]}} }[0m
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.1ms | Allocations: 961)
+
+
+  
+ActiveRecord::AssociationTypeMismatch (Exercice(#33660) expected, got "test" which is an instance of String(#2460)):
+  
+app/controllers/seances_controller.rb:13:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 16:34:05 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi1", "exercice"=>["test"], "seance"=>{"name"=>"Seance lundi1", "exercice"=>["test"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaacb6b380>, params: {"name"=>"Seance lundi1", "exercice"=>["test"], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi1", "exercice"=>["test"]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi1"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.6ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "exercice", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi1"], ["exercice", "{test}"], ["created_at", "2024-02-26 15:34:05.116449"], ["updated_at", "2024-02-26 15:34:05.116449"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 200 OK in 20ms (Views: 0.3ms | ActiveRecord: 7.3ms | Allocations: 9711)
+
+
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 16:45:28 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa7103190>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi2"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 422 Unprocessable Entity in 14ms (ActiveRecord: 5.5ms | Allocations: 8774)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Exercice can't be blank):
+  
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 16:46:42 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaac8b8f48>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi2"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 422 Unprocessable Entity in 21ms (ActiveRecord: 9.3ms | Allocations: 10741)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Exercice can't be blank):
+  
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 16:47:01 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :name, :repetition. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaacd5f240>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaacd5f240>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+Completed 500 Internal Server Error in 20ms (ActiveRecord: 4.8ms | Allocations: 7733)
+
+
+  
+ActiveRecord::AssociationTypeMismatch (Exercice(#65060) expected, got {} which is an instance of ActiveSupport::HashWithIndifferentAccess(#65080)):
+  
+app/controllers/seances_controller.rb:13:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 16:48:01 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaac843b08>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi2"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 422 Unprocessable Entity in 19ms (ActiveRecord: 5.9ms | Allocations: 10710)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Exercice can't be blank):
+  
+app/controllers/seances_controller.rb:14:in `create'
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to UpdateSeance (20240226155307)
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(3054882021592880325)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to UpdateSeance (20240226155307)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.7ms)[0m  [1m[35mALTER TABLE "seances" ALTER COLUMN "exercice" TYPE jsonb, ALTER COLUMN "exercice" SET DEFAULT '[]'[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(3054882021592880325)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to UpdateSeance (20240226155307)
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(3054882021592880325)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to UpdateSeance (20240226155307)
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (57.6ms)[0m  [1m[35mDROP DATABASE IF EXISTS "sport_tracking_development"[0m
+  [1m[35m (49.7ms)[0m  [1m[35mDROP DATABASE IF EXISTS "sport_tracking_test"[0m
+  [1m[35m (407.2ms)[0m  [1m[35mCREATE DATABASE "sport_tracking_development" ENCODING = 'unicode'[0m
+  [1m[35m (160.5ms)[0m  [1m[35mCREATE DATABASE "sport_tracking_test" ENCODING = 'unicode'[0m
+  [1m[35m (11.8ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to DeviseCreateUsers (20220424132519)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp(6), "remember_created_at" timestamp(6), "confirmation_token" character varying, "confirmed_at" timestamp(6), "confirmation_sent_at" timestamp(6), "unconfirmed_email" character varying, "failed_attempts" integer DEFAULT 0 NOT NULL, "unlock_token" character varying, "locked_at" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20220424132519"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to DropUsers (20220426171608)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (9.0ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20220426171608"]]
+  [1m[36mTRANSACTION (3.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateUsers (20220426173001)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.6ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "first_name" character varying, "last_name" character varying, "username" character varying, "email" character varying, "password_digest" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20220426173001"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSeances (20240208160412)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.8ms)[0m  [1m[35mCREATE TABLE "seances" ("id" bigserial primary key, "user_id" bigint, "name" character varying, "exercice" character varying[] DEFAULT '{}', "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_c2c1f32159"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE INDEX "index_seances_on_user_id" ON "seances" ("user_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240208160412"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to Exercices (20240226145402)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.1ms)[0m  [1m[35mCREATE TABLE "exercices" ("id" bigserial primary key, "seance_id" bigint, "name" character varying, "repetition" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_b6c07f5e0d"
+FOREIGN KEY ("seance_id")
+  REFERENCES "seances" ("id")
+)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE INDEX "index_exercices_on_seance_id" ON "exercices" ("seance_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240226145402"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to UpdateSeance (20240226155307)
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(3054882021592880325)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to UpdateSeance (20240226155307)
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(3054882021592880325)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to UpdateSeance (20240226155307)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "seances" ALTER COLUMN "exercice" TYPE jsonb, ALTER COLUMN "exercice" SET DEFAULT '[]'[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_advisory_unlock(3054882021592880325)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to UpdateSeance (20240226155307)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.6ms)[0m  [1m[35mCREATE TABLE "seances" ("id" bigserial primary key, "user_id" bigint, "name" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_c2c1f32159"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(3054882021592880325)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to UpdateSeance (20240226155307)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE TABLE "seances" ("id" bigserial primary key, "user_id" bigint, "name" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_c2c1f32159"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(3054882021592880325)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to UpdateSeance (20240226155307)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.2ms)[0m  [1m[35mCREATE TABLE "seances" ("id" bigserial primary key, "user_id" bigint, "name" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_c2c1f32159"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_advisory_unlock(3054882021592880325)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to UpdateSeance (20240226155307)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.4ms)[0m  [1m[35mDROP TABLE "exercice"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_advisory_unlock(3054882021592880325)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to UpdateSeance (20240226155307)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.9ms)[0m  [1m[35mDROP TABLE "exercices"[0m
+  [1m[35m (0.8ms)[0m  [1m[35mDROP TABLE "seances"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240226155307"]]
+  [1m[36mTRANSACTION (2.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.8ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2024-02-26 16:03:05.943617"], ["updated_at", "2024-02-26 16:03:05.943617"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to RecreateSeance (20240226160330)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.4ms)[0m  [1m[35mCREATE TABLE "seances" ("id" bigserial primary key, "user_id" bigint, "name" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_c2c1f32159"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE INDEX "index_seances_on_user_id" ON "seances" ("user_id")[0m
+  [1m[35m (2.2ms)[0m  [1m[35mALTER TABLE "seances" ADD "exercice" jsonb DEFAULT '[]'[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240226160330"]]
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to RecreateExercice (20240226160420)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.4ms)[0m  [1m[35mCREATE TABLE "exercices" ("id" bigserial primary key, "seance_id" bigint, "name" character varying, "repetition" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_b6c07f5e0d"
+FOREIGN KEY ("seance_id")
+  REFERENCES "seances" ("id")
+)[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE INDEX "index_exercices_on_seance_id" ON "exercices" ("seance_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20240226160420"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(3054882021592880325)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:04:50 +0100
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+Completed 404 Not Found in 5ms (ActiveRecord: 0.5ms | Allocations: 2931)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find User with 'id'=1):
+  
+app/controllers/application_controller.rb:12:in `authenticate_request'
+Started POST "/users" for 127.0.0.1 at 2024-02-26 17:04:58 +0100
+Processing by UsersController#create as */*
+  Parameters: {"email"=>"john.doe@demo.fr", "password"=>"[FILTERED]", "first_name"=>"John", "last_name"=>"Doe", "username"=>"jojo"}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/users_controller.rb:16:in `create'
+  [1m[36mUser Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "jojo"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:16:in `create'
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "username", "email", "password_digest", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["first_name", "John"], ["last_name", "Doe"], ["username", "jojo"], ["email", "john.doe@demo.fr"], ["password_digest", "[FILTERED]"], ["created_at", "2024-02-26 16:04:58.309720"], ["updated_at", "2024-02-26 16:04:58.309720"]]
+  ↳ app/controllers/users_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/users_controller.rb:16:in `create'
+Completed 200 OK in 215ms (Views: 0.4ms | ActiveRecord: 2.2ms | Allocations: 5139)
+
+
+Started POST "/auth/login" for 127.0.0.1 at 2024-02-26 17:05:22 +0100
+Processing by AuthenticationController#login as */*
+  Parameters: {"email"=>"john.doe@demo.fr", "password"=>"[FILTERED]"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "john.doe@demo.fr"], ["LIMIT", 1]]
+  ↳ app/controllers/authentication_controller.rb:5:in `login'
+Completed 200 OK in 210ms (Views: 0.2ms | ActiveRecord: 0.2ms | Allocations: 1327)
+
+
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:05:43 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa7ecbea8>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (1.0ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi2"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 422 Unprocessable Entity in 12ms (ActiveRecord: 1.5ms | Allocations: 6668)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Exercice can't be blank):
+  
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:07:04 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa6d653f8>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi2"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 422 Unprocessable Entity in 27ms (ActiveRecord: 9.0ms | Allocations: 10697)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Exercice can't be blank):
+  
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:07:58 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa74b5bd0>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa74b5bd0>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+Completed 200 OK in 14ms (Views: 0.1ms | ActiveRecord: 5.3ms | Allocations: 6682)
+
+
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:08:11 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaad837e88>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaad837e88>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+Completed 200 OK in 32ms (Views: 0.2ms | ActiveRecord: 5.4ms | Allocations: 6657)
+
+
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:08:37 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa3e7fed0>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa3e7fed0>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+Completed 200 OK in 13ms (Views: 0.2ms | ActiveRecord: 4.8ms | Allocations: 6681)
+
+
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:08:46 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :name, :repetition. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaac9c3aa0>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaac9c3aa0>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 5.8ms | Allocations: 7704)
+
+
+  
+ActiveRecord::AssociationTypeMismatch (Exercice(#119400) expected, got {} which is an instance of ActiveSupport::HashWithIndifferentAccess(#65080)):
+  
+app/controllers/seances_controller.rb:13:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:08:57 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa7108ca8>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa7108ca8>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+Completed 200 OK in 13ms (Views: 0.2ms | ActiveRecord: 4.7ms | Allocations: 6747)
+
+
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:09:35 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>{"name"=>"test", "repetition"=>10}, "seance"=>{"name"=>"Seance lundi2", "exercice"=>{"name"=>"test", "repetition"=>10}}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa7bc5c18>, params: {"name"=>"Seance lundi2", "exercice"=>{"name"=>"test", "repetition"=>10}, "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>{"name"=>"test", "repetition"=>10}}} }[0m
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa7bc5c18>, params: {"name"=>"Seance lundi2", "exercice"=>{"name"=>"test", "repetition"=>10}, "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>{"name"=>"test", "repetition"=>10}}} }[0m
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.1ms | Allocations: 1178)
+
+
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:09:39 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercices"=>{"name"=>"test", "repetition"=>10}, "seance"=>{"name"=>"Seance lundi2"}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercices, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa72f8e00>, params: {"name"=>"Seance lundi2", "exercices"=>{"name"=>"test", "repetition"=>10}, "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2"}} }[0m
+[31mUnpermitted parameters: :exercices, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa72f8e00>, params: {"name"=>"Seance lundi2", "exercices"=>{"name"=>"test", "repetition"=>10}, "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2"}} }[0m
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.1ms | Allocations: 1111)
+
+
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:10:02 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>["test"], "seance"=>{"name"=>"Seance lundi2", "exercice"=>["test"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa3e945b0>, params: {"name"=>"Seance lundi2", "exercice"=>["test"], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>["test"]}} }[0m
+Completed 500 Internal Server Error in 10ms (ActiveRecord: 0.2ms | Allocations: 3271)
+
+
+  
+ActiveRecord::AssociationTypeMismatch (Exercice(#127560) expected, got "test" which is an instance of String(#2460)):
+  
+app/controllers/seances_controller.rb:13:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:10:17 +0100
+Error occurred while parsing request parameters.
+Contents:
+
+{"name":"Seance lundi2","exercice":["name": "test"]}
+Processing by SeancesController#create as */*
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+Completed 400 Bad Request in 2ms (ActiveRecord: 0.1ms | Allocations: 807)
+
+
+  
+ActionDispatch::Http::Parameters::ParseError (Error occurred while parsing request parameters):
+  
+app/controllers/seances_controller.rb:25:in `seance_params'
+app/controllers/seances_controller.rb:13:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:10:28 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test"}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test"}]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaacae37f0>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test"}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test"}]}} }[0m
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaacae37f0>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test"}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test"}]}} }[0m
+Completed 200 OK in 2ms (Views: 0.1ms | ActiveRecord: 0.1ms | Allocations: 1259)
+
+
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:11:23 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test"}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test"}]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa7fdbf00>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test"}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test"}]}} }[0m
+Completed 500 Internal Server Error in 18ms (ActiveRecord: 4.6ms | Allocations: 7600)
+
+
+  
+ActiveRecord::AssociationTypeMismatch (Exercice(#135540) expected, got {"name"=>"test"} which is an instance of ActiveSupport::HashWithIndifferentAccess(#65080)):
+  
+app/controllers/seances_controller.rb:13:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:11:40 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaa3ea5608>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.1ms | Allocations: 1094)
+
+
+  
+ActiveRecord::AssociationTypeMismatch (Exercice(#135540) expected, got {"name"=>"test", "repetition"=>10} which is an instance of ActiveSupport::HashWithIndifferentAccess(#65080)):
+  
+app/controllers/seances_controller.rb:13:in `create'
+  [1m[36mSeance Load (0.8ms)[0m  [1m[34mSELECT "seances".* FROM "seances" ORDER BY "seances"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:24:02 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fcaac8b89a8>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+Completed 500 Internal Server Error in 34ms (ActiveRecord: 5.4ms | Allocations: 3359)
+
+
+  
+ActiveRecord::AssociationTypeMismatch (Exercice(#135540) expected, got {"name"=>"test", "repetition"=>10} which is an instance of ActiveSupport::HashWithIndifferentAccess(#65080)):
+  
+app/controllers/seances_controller.rb:13:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:29:11 +0100
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb221836c0>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+Completed 500 Internal Server Error in 63ms (ActiveRecord: 15.5ms | Allocations: 32231)
+
+
+  
+ActiveRecord::AssociationTypeMismatch (Exercice(#18380) expected, got {"name"=>"test", "repetition"=>10} which is an instance of ActiveSupport::HashWithIndifferentAccess(#18400)):
+  
+app/controllers/seances_controller.rb:13:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:31:03 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb222ea0b8>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 5.1ms | Allocations: 7605)
+
+
+  
+ActiveRecord::AssociationTypeMismatch (Exercice(#26160) expected, got {"name"=>"test", "repetition"=>10} which is an instance of ActiveSupport::HashWithIndifferentAccess(#18400)):
+  
+app/controllers/seances_controller.rb:13:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:31:14 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 3.8ms | Allocations: 6668)
+
+
+  
+NameError (undefined local variable or method `child_attributes' for #<SeancesController:0x000000000106f8>):
+  
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:32:07 +0100
+  
+SyntaxError (/Users/vo2group/work/perso/sport-tracking/backend/app/controllers/seances_controller.rb:25: syntax error, unexpected ')'
+...params.permit(:name, exercice:)
+...                              ^
+/Users/vo2group/work/perso/sport-tracking/backend/app/controllers/seances_controller.rb:29: syntax error, unexpected ')', expecting `end'
+...permit([[:name, :repetition]]))
+...                              ^
+):
+  
+app/controllers/seances_controller.rb:25: syntax error, unexpected ')'
+app/controllers/seances_controller.rb:29: syntax error, unexpected ')', expecting `end'
+app/controllers/seances_controller.rb:25: syntax error, unexpected ')'
+app/controllers/seances_controller.rb:29: syntax error, unexpected ')', expecting `end'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:32:18 +0100
+  
+SyntaxError (/Users/vo2group/work/perso/sport-tracking/backend/app/controllers/seances_controller.rb:25: syntax error, unexpected ')'
+...params.permit(:name, exercice:)
+...                              ^
+/Users/vo2group/work/perso/sport-tracking/backend/app/controllers/seances_controller.rb:32: syntax error, unexpected end-of-input, expecting `end'):
+  
+app/controllers/seances_controller.rb:25: syntax error, unexpected ')'
+app/controllers/seances_controller.rb:32: syntax error, unexpected end-of-input, expecting `end'
+app/controllers/seances_controller.rb:25: syntax error, unexpected ')'
+app/controllers/seances_controller.rb:32: syntax error, unexpected end-of-input, expecting `end'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:32:47 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :name, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb1d115990>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+Completed 200 OK in 9ms (Views: 0.3ms | ActiveRecord: 3.7ms | Allocations: 5148)
+
+
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:33:45 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb22288ac0>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mSeance Load (2.1ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."user_id" = $1[0m  [["user_id", 1]]
+Completed 500 Internal Server Error in 29ms (ActiveRecord: 4.8ms | Allocations: 11008)
+
+
+  
+NoMethodError (undefined method `exercices' for #<ActiveRecord::Associations::CollectionProxy [#<Seance id: nil, user_id: 1, name: "Seance lundi2", created_at: nil, updated_at: nil, exercice: []>]>):
+  
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:34:06 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb19c604c0>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mSeance Load (0.2ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."user_id" = $1[0m  [["user_id", 1]]
+Completed 500 Internal Server Error in 17ms (ActiveRecord: 4.9ms | Allocations: 9181)
+
+
+  
+NoMethodError (undefined method `exercice' for #<ActiveRecord::Associations::CollectionProxy [#<Seance id: nil, user_id: 1, name: "Seance lundi2", created_at: nil, updated_at: nil, exercice: []>]>):
+  
+app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Load (0.2ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."user_id" = $1[0m  [["user_id", 1]]
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:35:48 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb229138e0>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mSeance Load (0.2ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."user_id" = $1[0m  [["user_id", 1]]
+Completed 500 Internal Server Error in 16ms (ActiveRecord: 4.7ms | Allocations: 9156)
+
+
+  
+NoMethodError (undefined method `exercice' for #<ActiveRecord::Associations::CollectionProxy [#<Seance id: nil, user_id: 1, name: "Seance lundi2", created_at: nil, updated_at: nil, exercice: []>]>):
+  
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:36:12 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb223b0e20>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mSeance Load (0.2ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."user_id" = $1[0m  [["user_id", 1]]
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.1ms | Allocations: 3496)
+
+
+  
+NoMethodError (undefined method `exercice' for #<ActiveRecord::Associations::CollectionProxy [#<Seance id: nil, user_id: 1, name: "Seance lundi2", created_at: nil, updated_at: nil, exercice: []>]>):
+  
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:36:21 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb22553a48>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mSeance Load (0.2ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."user_id" = $1[0m  [["user_id", 1]]
+Completed 500 Internal Server Error in 17ms (ActiveRecord: 4.9ms | Allocations: 9187)
+
+
+  
+NoMethodError (undefined method `exercices' for #<ActiveRecord::Associations::CollectionProxy [#<Seance id: nil, user_id: 1, name: "Seance lundi2", created_at: nil, updated_at: nil, exercice: []>]>):
+  
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:36:41 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb22115800>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+[31mUnpermitted parameters: :name, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb22115800>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+Completed 500 Internal Server Error in 20ms (ActiveRecord: 7.0ms | Allocations: 11555)
+
+
+  
+ActiveModel::UnknownAttributeError (unknown attribute 'exercice' for Exercice.):
+  
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:37:04 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb22469330>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+[31mUnpermitted parameters: :name, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb22469330>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+Completed 500 Internal Server Error in 18ms (ActiveRecord: 4.7ms | Allocations: 7745)
+
+
+  
+NoMethodError (undefined method `new' for []:Array):
+  
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:38:00 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb1d104bb8>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:15:in `create'
+  [1m[36mSeance Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi2"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:15:in `create'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:15:in `create'
+Completed 422 Unprocessable Entity in 28ms (ActiveRecord: 5.5ms | Allocations: 10397)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Exercice can't be blank):
+  
+app/controllers/seances_controller.rb:15:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:38:18 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb1de8ccb8>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:15:in `create'
+  [1m[36mSeance Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi2"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:15:in `create'
+  [1m[36mSeance Create (3.6ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi2"], ["created_at", "2024-02-26 16:38:18.322201"], ["updated_at", "2024-02-26 16:38:18.322201"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:15:in `create'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:15:in `create'
+Completed 500 Internal Server Error in 30ms (ActiveRecord: 8.6ms | Allocations: 13176)
+
+
+  
+NameError (undefined local variable or method `seance' for #<Seance id: nil, user_id: 1, name: "Seance lundi2", created_at: "2024-02-26 16:38:18.322201000 +0000", updated_at: "2024-02-26 16:38:18.322201000 +0000", exercice: [{"name"=>"test", "repetition"=>10}]>):
+  
+app/models/seance.rb:12:in `create_exercices'
+app/controllers/seances_controller.rb:15:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:38:45 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameters: :exercice, :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb1d1d23b0>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi2"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 422 Unprocessable Entity in 15ms (ActiveRecord: 5.3ms | Allocations: 9038)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Exercice can't be blank):
+  
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:39:10 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb19ec1c78>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi2"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.3ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi2"], ["created_at", "2024-02-26 16:39:10.563343"], ["updated_at", "2024-02-26 16:39:10.563343"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 500 Internal Server Error in 22ms (ActiveRecord: 5.5ms | Allocations: 12888)
+
+
+  
+NameError (undefined local variable or method `seance' for #<Seance id: nil, user_id: 1, name: "Seance lundi2", created_at: "2024-02-26 16:39:10.563343000 +0000", updated_at: "2024-02-26 16:39:10.563343000 +0000", exercice: [{"name"=>"test", "repetition"=>10}]>):
+  
+app/models/seance.rb:12:in `create_exercices'
+app/controllers/seances_controller.rb:14:in `create'
+Started GET "/models/seance.rb:12:in" for 127.0.0.1 at 2024-02-26 17:40:39 +0100
+  
+ActionController::RoutingError (No route matches [GET] "/models/seance.rb:12:in"):
+  
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:40:56 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb220971f8>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi2"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.4ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi2"], ["created_at", "2024-02-26 16:40:56.490003"], ["updated_at", "2024-02-26 16:40:56.490003"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 200 OK in 19ms (Views: 0.3ms | ActiveRecord: 7.2ms | Allocations: 9752)
+
+
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mSeance Load (2.1ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."user_id" = $1[0m  [["user_id", 1]]
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:48:02 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb1dd90800>, params: {"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi2", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.8ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi2"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 422 Unprocessable Entity in 14ms (ActiveRecord: 6.3ms | Allocations: 8965)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Name has already been taken):
+  
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:48:11 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb19e4fd58>, params: {"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi3"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.7ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi3"], ["created_at", "2024-02-26 16:48:11.452036"], ["updated_at", "2024-02-26 16:48:11.452036"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 1.5ms | Allocations: 4192)
+
+
+  
+NoMethodError (undefined method `exercice' for nil:NilClass):
+  
+app/models/seance.rb:12:in `create_exercices'
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:48:55 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb223b81e8>, params: {"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi3"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.3ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi3"], ["created_at", "2024-02-26 16:48:55.772547"], ["updated_at", "2024-02-26 16:48:55.772547"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 500 Internal Server Error in 20ms (ActiveRecord: 9.7ms | Allocations: 10099)
+
+
+  
+NoMethodError (undefined method `exercice' for nil:NilClass):
+  
+app/models/seance.rb:12:in `create_exercices'
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:49:17 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb248b4320>, params: {"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi3"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.2ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi3"], ["created_at", "2024-02-26 16:49:17.486200"], ["updated_at", "2024-02-26 16:49:17.486200"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 500 Internal Server Error in 16ms (ActiveRecord: 5.5ms | Allocations: 10033)
+
+
+  
+NoMethodError (undefined method `exercice' for nil:NilClass):
+  
+app/models/seance.rb:12:in `create_exercices'
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:49:24 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb227a2178>, params: {"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi3"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.3ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi3"], ["created_at", "2024-02-26 16:49:24.367048"], ["updated_at", "2024-02-26 16:49:24.367048"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 500 Internal Server Error in 16ms (ActiveRecord: 5.5ms | Allocations: 10030)
+
+
+  
+NoMethodError (undefined method `exercice' for nil:NilClass):
+  
+app/models/seance.rb:12:in `create_exercices'
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:49:30 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb1c9e8cf8>, params: {"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi3"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.3ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi3"], ["created_at", "2024-02-26 16:49:31.049010"], ["updated_at", "2024-02-26 16:49:31.049010"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 500 Internal Server Error in 18ms (ActiveRecord: 5.6ms | Allocations: 10058)
+
+
+  
+NoMethodError (undefined method `exercice' for nil:NilClass):
+  
+app/models/seance.rb:12:in `create_exercices'
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:49:50 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb1dddb9e0>, params: {"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi3"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.3ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi3"], ["created_at", "2024-02-26 16:49:50.694117"], ["updated_at", "2024-02-26 16:49:50.694117"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 500 Internal Server Error in 18ms (ActiveRecord: 5.5ms | Allocations: 10033)
+
+
+  
+NoMethodError (undefined method `exercices' for nil:NilClass):
+  
+app/models/seance.rb:12:in `create_exercices'
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:50:01 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb2263ba50>, params: {"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi3", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi3"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.3ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi3"], ["created_at", "2024-02-26 16:50:01.391427"], ["updated_at", "2024-02-26 16:50:01.391427"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 200 OK in 20ms (Views: 0.4ms | ActiveRecord: 6.7ms | Allocations: 11268)
+
+
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:50:46 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi4", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi4", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb1d311780>, params: {"name"=>"Seance lundi4", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi4", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi4"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.2ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi4"], ["created_at", "2024-02-26 16:50:46.563907"], ["updated_at", "2024-02-26 16:50:46.563907"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 200 OK in 19ms (Views: 0.3ms | ActiveRecord: 5.7ms | Allocations: 11271)
+
+
+  [1m[36mExercice Load (5.4ms)[0m  [1m[34mSELECT "exercices".* FROM "exercices" ORDER BY "exercices"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+Started POST "/seances" for 127.0.0.1 at 2024-02-26 17:51:11 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi5", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi5", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb22e16798>, params: {"name"=>"Seance lundi5", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi5", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi5"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.2ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi5"], ["created_at", "2024-02-26 16:51:12.035863"], ["updated_at", "2024-02-26 16:51:12.035863"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 200 OK in 19ms (Views: 0.3ms | ActiveRecord: 5.4ms | Allocations: 11266)
+
+
+  [1m[36mExercice Load (0.4ms)[0m  [1m[34mSELECT "exercices".* FROM "exercices" ORDER BY "exercices"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mExercice Load (0.5ms)[0m  [1m[34mSELECT "exercices".* FROM "exercices"[0m
+  [1m[36mExercice Load (23.7ms)[0m  [1m[34mSELECT "exercices".* FROM "exercices"[0m
+Started POST "/auth/login" for 127.0.0.1 at 2024-03-04 15:44:17 +0100
+Processing by AuthenticationController#login as */*
+  Parameters: {"email"=>"john.doe@demo.fr", "password"=>"[FILTERED]"}
+  [1m[36mUser Load (5.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "john.doe@demo.fr"], ["LIMIT", 1]]
+  ↳ app/controllers/authentication_controller.rb:5:in `login'
+Completed 200 OK in 343ms (Views: 0.4ms | ActiveRecord: 58.3ms | Allocations: 7588)
+
+
+Started POST "/seances" for 127.0.0.1 at 2024-03-04 15:44:48 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi4", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi4", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb1dd40058>, params: {"name"=>"Seance lundi4", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi4", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (5.4ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi4"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 422 Unprocessable Entity in 18ms (ActiveRecord: 6.7ms | Allocations: 5479)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Name has already been taken):
+  
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-03-04 15:44:55 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi6", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi6", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb22378a48>, params: {"name"=>"Seance lundi6", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi6", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi6"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (6.9ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi6"], ["created_at", "2024-03-04 14:44:55.697460"], ["updated_at", "2024-03-04 14:44:55.697460"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mExercice Load (2.9ms)[0m  [1m[34mSELECT "exercices".* FROM "exercices" WHERE "exercices"."seance_id" = $1[0m  [["seance_id", 13]]
+  ↳ app/models/seance.rb:12:in `create_exercices'
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 200 OK in 50ms (Views: 0.4ms | ActiveRecord: 28.2ms | Allocations: 7824)
+
+
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mSeance Load (1.4ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mSeance Load (0.3ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mExercice Load (1.7ms)[0m  [1m[34mSELECT "exercices".* FROM "exercices" WHERE "exercices"."seance_id" = $1[0m  [["seance_id", 13]]
+Started POST "/seances" for 127.0.0.1 at 2024-03-04 15:49:31 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi7", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi7", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb1df5c738>, params: {"name"=>"Seance lundi7", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi7", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi7"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.3ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi7"], ["created_at", "2024-03-04 14:49:31.147889"], ["updated_at", "2024-03-04 14:49:31.147889"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mExercice Load (0.1ms)[0m  [1m[34mSELECT "exercices".* FROM "exercices" WHERE "exercices"."seance_id" = $1 /* loading for inspect */ LIMIT $2[0m  [["seance_id", 14], ["LIMIT", 11]]
+  ↳ app/models/seance.rb:13:in `p'
+  [1m[36mExercice Load (0.1ms)[0m  [1m[34mSELECT "exercices".* FROM "exercices" WHERE "exercices"."seance_id" = $1[0m  [["seance_id", 14]]
+  ↳ app/models/seance.rb:14:in `create_exercices'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 500 Internal Server Error in 33ms (ActiveRecord: 8.1ms | Allocations: 15457)
+
+
+  
+NoMethodError (undefined method `save!' for #<ActiveRecord::Associations::CollectionProxy []>):
+  
+app/models/seance.rb:17:in `create_exercices'
+app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Load (0.4ms)[0m  [1m[34mSELECT "seances".* FROM "seances" ORDER BY "seances"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mSeance Load (0.7ms)[0m  [1m[34mSELECT "seances".* FROM "seances" ORDER BY "seances"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mExercice Load (0.3ms)[0m  [1m[34mSELECT "exercices".* FROM "exercices" ORDER BY "exercices"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mExercice Load (0.4ms)[0m  [1m[34mSELECT "exercices".* FROM "exercices" ORDER BY "exercices"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+Started POST "/seances" for 127.0.0.1 at 2024-03-04 15:57:16 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi8", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi8", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb1d2e8920>, params: {"name"=>"Seance lundi8", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi8", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.8ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi8"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.6ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi8"], ["created_at", "2024-03-04 14:57:16.531296"], ["updated_at", "2024-03-04 14:57:16.531296"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mExercice Load (0.3ms)[0m  [1m[34mSELECT "exercices".* FROM "exercices" WHERE "exercices"."seance_id" = $1 /* loading for inspect */ LIMIT $2[0m  [["seance_id", 15], ["LIMIT", 11]]
+  ↳ app/models/seance.rb:13:in `p'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 500 Internal Server Error in 21ms (ActiveRecord: 7.5ms | Allocations: 13030)
+
+
+  
+NoMethodError (undefined method `name' for {"name"=>"test", "repetition"=>10}:Hash):
+  
+app/models/seance.rb:15:in `block in create_exercices'
+app/models/seance.rb:14:in `each'
+app/models/seance.rb:14:in `create_exercices'
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-03-04 15:58:01 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi9", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi9", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb19c21798>, params: {"name"=>"Seance lundi9", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi9", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi9"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.3ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi9"], ["created_at", "2024-03-04 14:58:01.335270"], ["updated_at", "2024-03-04 14:58:01.335270"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 500 Internal Server Error in 24ms (ActiveRecord: 9.8ms | Allocations: 12006)
+
+
+  
+NoMethodError (undefined method `name' for {"name"=>"test", "repetition"=>10}:Hash):
+  
+app/models/seance.rb:15:in `block in create_exercices'
+app/models/seance.rb:14:in `each'
+app/models/seance.rb:14:in `create_exercices'
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-03-04 15:58:44 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi10", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi10", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb1d254b80>, params: {"name"=>"Seance lundi10", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi10", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi10"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.3ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi10"], ["created_at", "2024-03-04 14:58:44.541478"], ["updated_at", "2024-03-04 14:58:44.541478"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 500 Internal Server Error in 26ms (ActiveRecord: 7.4ms | Allocations: 14764)
+
+
+  
+NoMethodError (undefined method `save!' for #<ActiveRecord::Associations::CollectionProxy []>):
+  
+app/models/seance.rb:16:in `block in create_exercices'
+app/models/seance.rb:14:in `each'
+app/models/seance.rb:14:in `create_exercices'
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-03-04 16:10:50 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi11", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi11", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb227132c0>, params: {"name"=>"Seance lundi11", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi11", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi11"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.7ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi11"], ["created_at", "2024-03-04 15:10:50.218712"], ["updated_at", "2024-03-04 15:10:50.218712"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Load (0.2ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/seance.rb:16:in `block in create_exercices'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 422 Unprocessable Entity in 22ms (ActiveRecord: 6.9ms | Allocations: 13933)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Name can't be blank):
+  
+app/models/seance.rb:16:in `block in create_exercices'
+app/models/seance.rb:14:in `each'
+app/models/seance.rb:14:in `create_exercices'
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-03-04 16:11:12 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi12", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi12", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb1da747c0>, params: {"name"=>"Seance lundi12", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi12", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi12"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.4ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi12"], ["created_at", "2024-03-04 15:11:12.825320"], ["updated_at", "2024-03-04 15:11:12.825320"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 500 Internal Server Error in 22ms (ActiveRecord: 8.8ms | Allocations: 10730)
+
+
+  
+NoMethodError (undefined method `name' for {"name"=>"test", "repetition"=>10}:Hash):
+  
+app/models/seance.rb:15:in `block in create_exercices'
+app/models/seance.rb:14:in `each'
+app/models/seance.rb:14:in `create_exercices'
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-03-04 16:11:58 +0100
+  
+SyntaxError (/Users/vo2group/work/perso/sport-tracking/backend/app/models/seance.rb:15: syntax error, unexpected local variable or method, expecting `end'
+...p "exercice.name ::: " exercice.name
+...                       ^~~~~~~~
+):
+  
+app/models/seance.rb:15: syntax error, unexpected local variable or method, expecting `end'
+app/models/seance.rb:15: syntax error, unexpected local variable or method, expecting `end'
+Started POST "/seances" for 127.0.0.1 at 2024-03-04 16:12:41 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi14", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi14", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb2487f198>, params: {"name"=>"Seance lundi14", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi14", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi14"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.4ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi14"], ["created_at", "2024-03-04 15:12:41.871556"], ["updated_at", "2024-03-04 15:12:41.871556"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 500 Internal Server Error in 18ms (ActiveRecord: 5.9ms | Allocations: 10666)
+
+
+  
+NoMethodError (undefined method `name' for {"name"=>"test", "repetition"=>10}:Hash):
+  
+app/models/seance.rb:16:in `block in create_exercices'
+app/models/seance.rb:14:in `each'
+app/models/seance.rb:14:in `create_exercices'
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-03-04 16:13:03 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi15", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi15", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb22dac9b0>, params: {"name"=>"Seance lundi15", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi15", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi15"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.5ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi15"], ["created_at", "2024-03-04 15:13:04.014968"], ["updated_at", "2024-03-04 15:13:04.014968"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Load (0.3ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 21], ["LIMIT", 1]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 422 Unprocessable Entity in 28ms (ActiveRecord: 8.4ms | Allocations: 14382)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Name can't be blank):
+  
+app/models/seance.rb:18:in `block in create_exercices'
+app/models/seance.rb:14:in `each'
+app/models/seance.rb:14:in `create_exercices'
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-03-04 16:13:21 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi15", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi15", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb22320dc0>, params: {"name"=>"Seance lundi15", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi15", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi15"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.3ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi15"], ["created_at", "2024-03-04 15:13:21.971535"], ["updated_at", "2024-03-04 15:13:21.971535"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Load (0.2ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 22], ["LIMIT", 1]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 422 Unprocessable Entity in 28ms (ActiveRecord: 8.9ms | Allocations: 14454)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Name can't be blank):
+  
+app/models/seance.rb:18:in `block in create_exercices'
+app/models/seance.rb:14:in `each'
+app/models/seance.rb:14:in `create_exercices'
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-03-04 16:13:43 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi15", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi15", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb22ba4910>, params: {"name"=>"Seance lundi15", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi15", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi15"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.3ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi15"], ["created_at", "2024-03-04 15:13:43.982956"], ["updated_at", "2024-03-04 15:13:43.982956"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Load (0.2ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 23], ["LIMIT", 1]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 422 Unprocessable Entity in 28ms (ActiveRecord: 7.6ms | Allocations: 14379)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: Name can't be blank):
+  
+app/models/seance.rb:18:in `block in create_exercices'
+app/models/seance.rb:14:in `each'
+app/models/seance.rb:14:in `create_exercices'
+app/controllers/seances_controller.rb:14:in `create'
+Started POST "/seances" for 127.0.0.1 at 2024-03-04 16:14:05 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance lundi15", "exercice"=>[{"name"=>"test", "repetition"=>10}], "seance"=>{"name"=>"Seance lundi15", "exercice"=>[{"name"=>"test", "repetition"=>10}]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb1cd7d8c8>, params: {"name"=>"Seance lundi15", "exercice"=>[{"name"=>"test", "repetition"=>10}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance lundi15", "exercice"=>[{"name"=>"test", "repetition"=>10}]}} }[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance lundi15"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.3ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance lundi15"], ["created_at", "2024-03-04 15:14:05.972892"], ["updated_at", "2024-03-04 15:14:05.972892"], ["exercice", "[{\"name\":\"test\",\"repetition\":10}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Load (0.2ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 24], ["LIMIT", 1]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mExercice Create (2.0ms)[0m  [1m[32mINSERT INTO "exercices" ("seance_id", "name", "repetition", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["seance_id", 24], ["name", "test"], ["repetition", 10], ["created_at", "2024-03-04 15:14:05.982874"], ["updated_at", "2024-03-04 15:14:05.982874"]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 200 OK in 32ms (Views: 0.5ms | ActiveRecord: 11.3ms | Allocations: 14778)
+
+
+  [1m[36mExercice Load (0.6ms)[0m  [1m[34mSELECT "exercices".* FROM "exercices" ORDER BY "exercices"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (2.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (2.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (8041.6ms)[0m  [1m[35mDROP DATABASE IF EXISTS "sport_tracking_development"[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Pluck (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (70.1ms)[0m  [1m[35mDROP DATABASE IF EXISTS "sport_tracking_development"[0m
+  [1m[35m (43.5ms)[0m  [1m[35mDROP DATABASE IF EXISTS "sport_tracking_test"[0m
+  [1m[35m (436.1ms)[0m  [1m[35mCREATE DATABASE "sport_tracking_development" ENCODING = 'unicode'[0m
+  [1m[35m (162.5ms)[0m  [1m[35mCREATE DATABASE "sport_tracking_test" ENCODING = 'unicode'[0m
+  [1m[35mSQL (2.5ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (1.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "exercices" CASCADE[0m
+  [1m[35m (20.1ms)[0m  [1m[35mCREATE TABLE "exercices" ("id" bigserial primary key, "seance_id" bigint, "name" character varying, "repetition" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE INDEX "index_exercices_on_seance_id" ON "exercices" ("seance_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "seances" CASCADE[0m
+  [1m[35m (6.5ms)[0m  [1m[35mCREATE TABLE "seances" ("id" bigserial primary key, "user_id" bigint, "name" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "exercice" jsonb DEFAULT '[]')[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE INDEX "index_seances_on_user_id" ON "seances" ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE[0m
+  [1m[35m (4.9ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "first_name" character varying, "last_name" character varying, "username" character varying, "email" character varying, "password_digest" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (7.1ms)[0m  [1m[35mALTER TABLE "exercices" ADD CONSTRAINT "fk_rails_b6c07f5e0d"
+FOREIGN KEY ("seance_id")
+  REFERENCES "seances" ("id")
+[0m
+  [1m[35m (1.8ms)[0m  [1m[35mALTER TABLE "seances" ADD CONSTRAINT "fk_rails_c2c1f32159"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20240226160420)[0m
+  [1m[35m (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20220424132519),
+(20220426171608),
+(20220426173001),
+(20240208160412),
+(20240226145402),
+(20240226155307),
+(20240226160330);
+
+[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2024-03-04 15:20:14.839197"], ["updated_at", "2024-03-04 15:20:14.839197"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "schema_sha1"], ["value", "01f31ce3dbaafbf956bdbb2a33f2be1fd0765815"], ["created_at", "2024-03-04 15:20:14.845350"], ["updated_at", "2024-03-04 15:20:14.845350"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "exercices" CASCADE[0m
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE TABLE "exercices" ("id" bigserial primary key, "seance_id" bigint, "name" character varying, "repetition" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE INDEX "index_exercices_on_seance_id" ON "exercices" ("seance_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "seances" CASCADE[0m
+  [1m[35m (4.4ms)[0m  [1m[35mCREATE TABLE "seances" ("id" bigserial primary key, "user_id" bigint, "name" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "exercice" jsonb DEFAULT '[]')[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE INDEX "index_seances_on_user_id" ON "seances" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "first_name" character varying, "last_name" character varying, "username" character varying, "email" character varying, "password_digest" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (3.6ms)[0m  [1m[35mALTER TABLE "exercices" ADD CONSTRAINT "fk_rails_b6c07f5e0d"
+FOREIGN KEY ("seance_id")
+  REFERENCES "seances" ("id")
+[0m
+  [1m[35m (1.7ms)[0m  [1m[35mALTER TABLE "seances" ADD CONSTRAINT "fk_rails_c2c1f32159"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (3.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20240226160420)[0m
+  [1m[35m (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20220424132519),
+(20220426171608),
+(20220426173001),
+(20240208160412),
+(20240226145402),
+(20240226155307),
+(20240226160330);
+
+[0m
+  [1m[35m (3.9ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2024-03-04 15:20:14.933646"], ["updated_at", "2024-03-04 15:20:14.933646"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Update (0.7ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = $1, "updated_at" = $2 WHERE "ar_internal_metadata"."key" = $3[0m  [["value", "test"], ["updated_at", "2024-03-04 15:20:14.937810"], ["key", "environment"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "schema_sha1"], ["value", "01f31ce3dbaafbf956bdbb2a33f2be1fd0765815"], ["created_at", "2024-03-04 15:20:14.942113"], ["updated_at", "2024-03-04 15:20:14.942113"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+Started POST "/users" for 127.0.0.1 at 2024-03-04 16:21:04 +0100
+Processing by UsersController#create as */*
+  Parameters: {"email"=>"herole.alexandre@gmail.com", "password"=>"[FILTERED]", "first_name"=>"alexandre", "last_name"=>"herole", "username"=>"alex"}
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/users_controller.rb:16:in `create'
+  [1m[36mUser Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = $1 LIMIT $2[0m  [["username", "alex"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:16:in `create'
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("first_name", "last_name", "username", "email", "password_digest", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["first_name", "alexandre"], ["last_name", "herole"], ["username", "alex"], ["email", "herole.alexandre@gmail.com"], ["password_digest", "[FILTERED]"], ["created_at", "2024-03-04 15:21:04.629747"], ["updated_at", "2024-03-04 15:21:04.629747"]]
+  ↳ app/controllers/users_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (4.2ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/users_controller.rb:16:in `create'
+Completed 200 OK in 249ms (Views: 0.4ms | ActiveRecord: 9.7ms | Allocations: 5974)
+
+
+Started POST "/auth/login" for 127.0.0.1 at 2024-03-04 16:21:23 +0100
+Processing by AuthenticationController#login as */*
+  Parameters: {"email"=>"herole.alexandre@gmail.com", "password"=>"[FILTERED]"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "herole.alexandre@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/authentication_controller.rb:5:in `login'
+Completed 200 OK in 210ms (Views: 0.3ms | ActiveRecord: 0.3ms | Allocations: 1404)
+
+
+Started POST "/seances" for 127.0.0.1 at 2024-03-04 16:25:12 +0100
+Processing by SeancesController#create as */*
+  Parameters: {"name"=>"Seance Lundi 04/03", "exercice"=>[{"name"=>"A1", "repetition"=>12}, {"name"=>"A1", "repetition"=>11}, {"name"=>"D", "repetition"=>10}, {"name"=>"D", "repetition"=>8}, {"name"=>"C5", "repetition"=>7}, {"name"=>"C5", "repetition"=>9}, {"name"=>"E", "repetition"=>9}, {"name"=>"E", "repetition"=>10}, {"name"=>"F", "repetition"=>19}, {"name"=>"F", "repetition"=>17}, {"name"=>"G", "repetition"=>15}, {"name"=>"G", "repetition"=>14}], "seance"=>{"name"=>"Seance Lundi 04/03", "exercice"=>[{"name"=>"A1", "repetition"=>12}, {"name"=>"A1", "repetition"=>11}, {"name"=>"D", "repetition"=>10}, {"name"=>"D", "repetition"=>8}, {"name"=>"C5", "repetition"=>7}, {"name"=>"C5", "repetition"=>9}, {"name"=>"E", "repetition"=>9}, {"name"=>"E", "repetition"=>10}, {"name"=>"F", "repetition"=>19}, {"name"=>"F", "repetition"=>17}, {"name"=>"G", "repetition"=>15}, {"name"=>"G", "repetition"=>14}]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:12:in `authenticate_request'
+[31mUnpermitted parameter: :seance. Context: { controller: SeancesController, action: create, request: #<ActionDispatch::Request:0x00007fdb1dbed660>, params: {"name"=>"Seance Lundi 04/03", "exercice"=>[{"name"=>"A1", "repetition"=>12}, {"name"=>"A1", "repetition"=>11}, {"name"=>"D", "repetition"=>10}, {"name"=>"D", "repetition"=>8}, {"name"=>"C5", "repetition"=>7}, {"name"=>"C5", "repetition"=>9}, {"name"=>"E", "repetition"=>9}, {"name"=>"E", "repetition"=>10}, {"name"=>"F", "repetition"=>19}, {"name"=>"F", "repetition"=>17}, {"name"=>"G", "repetition"=>15}, {"name"=>"G", "repetition"=>14}], "controller"=>"seances", "action"=>"create", "seance"=>{"name"=>"Seance Lundi 04/03", "exercice"=>[{"name"=>"A1", "repetition"=>12}, {"name"=>"A1", "repetition"=>11}, {"name"=>"D", "repetition"=>10}, {"name"=>"D", "repetition"=>8}, {"name"=>"C5", "repetition"=>7}, {"name"=>"C5", "repetition"=>9}, {"name"=>"E", "repetition"=>9}, {"name"=>"E", "repetition"=>10}, {"name"=>"F", "repetition"=>19}, {"name"=>"F", "repetition"=>17}, {"name"=>"G", "repetition"=>15}, {"name"=>"G", "repetition"=>14}]}} }[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "seances" WHERE "seances"."name" = $1 LIMIT $2[0m  [["name", "Seance Lundi 04/03"], ["LIMIT", 1]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Create (0.9ms)[0m  [1m[32mINSERT INTO "seances" ("user_id", "name", "created_at", "updated_at", "exercice") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["user_id", 1], ["name", "Seance Lundi 04/03"], ["created_at", "2024-03-04 15:25:12.069077"], ["updated_at", "2024-03-04 15:25:12.069077"], ["exercice", "[{\"name\":\"A1\",\"repetition\":12},{\"name\":\"A1\",\"repetition\":11},{\"name\":\"D\",\"repetition\":10},{\"name\":\"D\",\"repetition\":8},{\"name\":\"C5\",\"repetition\":7},{\"name\":\"C5\",\"repetition\":9},{\"name\":\"E\",\"repetition\":9},{\"name\":\"E\",\"repetition\":10},{\"name\":\"F\",\"repetition\":19},{\"name\":\"F\",\"repetition\":17},{\"name\":\"G\",\"repetition\":15},{\"name\":\"G\",\"repetition\":14}]"]]
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+  [1m[36mSeance Load (0.3ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mExercice Create (0.8ms)[0m  [1m[32mINSERT INTO "exercices" ("seance_id", "name", "repetition", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["seance_id", 1], ["name", "A1"], ["repetition", 12], ["created_at", "2024-03-04 15:25:12.073928"], ["updated_at", "2024-03-04 15:25:12.073928"]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mSeance Load (0.2ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mExercice Create (0.2ms)[0m  [1m[32mINSERT INTO "exercices" ("seance_id", "name", "repetition", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["seance_id", 1], ["name", "A1"], ["repetition", 11], ["created_at", "2024-03-04 15:25:12.077321"], ["updated_at", "2024-03-04 15:25:12.077321"]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mSeance Load (0.2ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mExercice Create (0.3ms)[0m  [1m[32mINSERT INTO "exercices" ("seance_id", "name", "repetition", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["seance_id", 1], ["name", "D"], ["repetition", 10], ["created_at", "2024-03-04 15:25:12.079762"], ["updated_at", "2024-03-04 15:25:12.079762"]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mSeance Load (0.1ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mExercice Create (0.4ms)[0m  [1m[32mINSERT INTO "exercices" ("seance_id", "name", "repetition", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["seance_id", 1], ["name", "D"], ["repetition", 8], ["created_at", "2024-03-04 15:25:12.082112"], ["updated_at", "2024-03-04 15:25:12.082112"]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mSeance Load (0.2ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mExercice Create (0.3ms)[0m  [1m[32mINSERT INTO "exercices" ("seance_id", "name", "repetition", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["seance_id", 1], ["name", "C5"], ["repetition", 7], ["created_at", "2024-03-04 15:25:12.084641"], ["updated_at", "2024-03-04 15:25:12.084641"]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mSeance Load (0.2ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mExercice Create (0.2ms)[0m  [1m[32mINSERT INTO "exercices" ("seance_id", "name", "repetition", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["seance_id", 1], ["name", "C5"], ["repetition", 9], ["created_at", "2024-03-04 15:25:12.087541"], ["updated_at", "2024-03-04 15:25:12.087541"]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mSeance Load (0.1ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mExercice Create (0.2ms)[0m  [1m[32mINSERT INTO "exercices" ("seance_id", "name", "repetition", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["seance_id", 1], ["name", "E"], ["repetition", 9], ["created_at", "2024-03-04 15:25:12.090261"], ["updated_at", "2024-03-04 15:25:12.090261"]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mSeance Load (0.1ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mExercice Create (0.2ms)[0m  [1m[32mINSERT INTO "exercices" ("seance_id", "name", "repetition", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["seance_id", 1], ["name", "E"], ["repetition", 10], ["created_at", "2024-03-04 15:25:12.092604"], ["updated_at", "2024-03-04 15:25:12.092604"]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mSeance Load (0.2ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mExercice Create (0.2ms)[0m  [1m[32mINSERT INTO "exercices" ("seance_id", "name", "repetition", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["seance_id", 1], ["name", "F"], ["repetition", 19], ["created_at", "2024-03-04 15:25:12.094915"], ["updated_at", "2024-03-04 15:25:12.094915"]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mSeance Load (0.1ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mExercice Create (0.2ms)[0m  [1m[32mINSERT INTO "exercices" ("seance_id", "name", "repetition", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["seance_id", 1], ["name", "F"], ["repetition", 17], ["created_at", "2024-03-04 15:25:12.097305"], ["updated_at", "2024-03-04 15:25:12.097305"]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mSeance Load (0.1ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mExercice Create (0.2ms)[0m  [1m[32mINSERT INTO "exercices" ("seance_id", "name", "repetition", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["seance_id", 1], ["name", "G"], ["repetition", 15], ["created_at", "2024-03-04 15:25:12.099338"], ["updated_at", "2024-03-04 15:25:12.099338"]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mSeance Load (0.1ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mExercice Create (0.3ms)[0m  [1m[32mINSERT INTO "exercices" ("seance_id", "name", "repetition", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["seance_id", 1], ["name", "G"], ["repetition", 14], ["created_at", "2024-03-04 15:25:12.102217"], ["updated_at", "2024-03-04 15:25:12.102217"]]
+  ↳ app/models/seance.rb:18:in `block in create_exercices'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/seances_controller.rb:14:in `create'
+Completed 200 OK in 41ms (Views: 0.3ms | ActiveRecord: 7.4ms | Allocations: 23791)
+
+
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mSeance Load (3.1ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mExercice Load (0.7ms)[0m  [1m[34mSELECT "exercices".* FROM "exercices" ORDER BY "exercices"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mExercice Load (0.9ms)[0m  [1m[34mSELECT "exercices".* FROM "exercices"[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSeance Load (0.5ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."user_id" = $1[0m  [["user_id", 1]]
+  [1m[36mExercice Load (18.1ms)[0m  [1m[34mSELECT "exercices".* FROM "exercices"[0m
+  [1m[36mSeance Load (4.5ms)[0m  [1m[34mSELECT "seances".* FROM "seances" WHERE "seances"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mExercice Load (0.4ms)[0m  [1m[34mSELECT "exercices".* FROM "exercices" WHERE "exercices"."seance_id" = $1[0m  [["seance_id", 1]]
+Started GET "/models/seance.rb:12:in" for 127.0.0.1 at 2024-03-13 09:37:40 +0100
+  
+ActionController::RoutingError (No route matches [GET] "/models/seance.rb:12:in"):
+  
+Started GET "/controllers/seances_controller.rb:13:in" for 127.0.0.1 at 2024-03-13 09:38:38 +0100
+  
+ActionController::RoutingError (No route matches [GET] "/controllers/seances_controller.rb:13:in"):
+  

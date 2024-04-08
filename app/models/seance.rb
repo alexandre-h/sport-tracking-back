@@ -1,19 +1,7 @@
 class Seance < ApplicationRecord
-
   belongs_to :user
-  has_many :exercices
-  after_create :create_exercices
+  has_many :exercices, dependent: :destroy
+  accepts_nested_attributes_for :exercices, allow_destroy: true
 
   validates :name, presence: true, uniqueness: true
-  validates :exercice, presence: true
-
-
-
-  private
-  def create_exercices
-    for exercice in self.exercice do
-      @exercice = Exercice.new(name: exercice['name'], repetition: exercice['repetition'], seance_id: self.id)
-      @exercice.save!
-    end
-  end
 end

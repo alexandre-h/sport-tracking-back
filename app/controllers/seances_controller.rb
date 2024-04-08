@@ -9,24 +9,40 @@ class SeancesController < ApplicationController
     render json: @current_user.seances, status: :ok
   end
 
+  def new
+    @seance = Seance.new
+    @seance.exercices.build
+  end
+
   def create
      @seance = @current_user.seances.new(seance_params)
       if @seance.save!
-        # @seance.exercice.new(exercice_params)
         render json: @seance, status: :ok
     else
         render json: { errors: @seance.errors.full_message }, status: :unprocessable_entity
     end
   end
 
+  def edit
+    @seance =  Seance.find(params[:id])
+  end
+
+  def update
+    @seance =  Seance.find(params[:id])
+    if (@seance.update(seance_params))
+      render json: @seance, status: :ok
+    else
+      render json: { errors: @seance.erros.full_message }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @seance = Seance.find(params[:id])
+    @seance.destroy
+  end
+
   private
-
   def seance_params
-    params.permit(:name, exercice: [:name, :repetition])
+    params.require(:seance).permit(:name, exercices_attributes: [:name, :repetition])
   end
-
-  def exercice_params
-  params.permit(exercice: [:name, :repetition])
-  end
-
 end

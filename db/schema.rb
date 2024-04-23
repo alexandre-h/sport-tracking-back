@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_26_160420) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_23_093025) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,12 +23,23 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_160420) do
     t.index ["seance_id"], name: "index_exercices_on_seance_id"
   end
 
+  create_table "seance_templates", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "exercice", default: []
+    t.index ["user_id"], name: "index_seance_templates_on_user_id"
+  end
+
   create_table "seances", force: :cascade do |t|
     t.bigint "user_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "exercice", default: []
+    t.bigint "seance_template_id"
+    t.index ["seance_template_id"], name: "index_seances_on_seance_template_id"
     t.index ["user_id"], name: "index_seances_on_user_id"
   end
 
@@ -43,5 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_26_160420) do
   end
 
   add_foreign_key "exercices", "seances"
+  add_foreign_key "seance_templates", "users"
+  add_foreign_key "seances", "seance_templates"
   add_foreign_key "seances", "users"
 end

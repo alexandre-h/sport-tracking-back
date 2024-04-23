@@ -15,11 +15,11 @@ class SeancesController < ApplicationController
   end
 
   def create
-     @seance = @current_user.seances.new(seance_params)
-      if @seance.save!
-        render json: @seance, status: :ok
+    success, message = SeanceService.new(seance_params, @current_user).call
+    if success
+      render json: { success: true, message: message }, status: :ok
     else
-        render json: { errors: @seance.errors.full_message }, status: :unprocessable_entity
+      render json: { success: false, errors: message }, status: :unprocessable_entity
     end
   end
 
@@ -43,6 +43,6 @@ class SeancesController < ApplicationController
 
   private
   def seance_params
-    params.require(:seance).permit(:name, exercices_attributes: [:name, :repetition])
+    params.require(:seance).permit(:name, :seance_template_id, exercices_attributes: [:name, :repetition])
   end
 end

@@ -1,17 +1,14 @@
 class ApplicationController < ActionController::API
-  include JsonWebToken, ExceptionHandler
+    include ActionController::MimeResponds
+    include ActionController::RequestForgeryProtection
 
-  before_action :authenticate_request
+    protect_from_forgery with: :null_session
 
-  private
-      def authenticate_request
-          header = request.headers["Authorization"]
-          if header
-              header = header.split(" ").last
-              decoded = jwt_decode(header)
-              @current_user = User.find(decoded[:user_id])
-          else
-              render json: {error: 'Unauthorized' }, status: :unauthorized
-          end
-      end
-end
+    before_action :configure_permitted_parameters, if: :devise_controller?
+
+    protected
+
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :first_name, :last_name])
+    end
+  end

@@ -1,12 +1,12 @@
 class SeancesController < ApplicationController
 
   def index
-    @seances = @current_user.seances
+    @seances = current_user.seances
     render json: @seances, status: :ok
   end
 
   def show
-    render json: @current_user.seances, status: :ok
+    render json: current_user.seances, status: :ok
   end
 
   def new
@@ -15,7 +15,7 @@ class SeancesController < ApplicationController
   end
 
   def create
-    success, message = SeanceService.new(seance_params, @current_user).call
+    success, message = SeanceService.new(seance_params, current_user).call
     if success
       render json: { success: true, message: message }, status: :ok
     else

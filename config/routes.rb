@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   }
 
   resources :seances
+  resources :seance_templates
 end
